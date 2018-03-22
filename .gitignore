@@ -104,4 +104,11 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+/.idea
+/synthetic*
+/experiments/data/*
+/experiments/plots/*
+/experiments/traces/*
+/experiments/parameters/*
+
 # End of https://www.gitignore.io/api/python

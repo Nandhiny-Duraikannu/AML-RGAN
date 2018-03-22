@@ -20,12 +20,12 @@ def get_batch(samples, labels, batch_size, batch_idx):
     return samples[start_pos:end_pos], labels[start_pos:end_pos]
 
 # directory where the data will be saved
-wd = './synthetic_eICU_datasets'
+wd = './synthetic_wisdm_datasets'
 if not os.path.isdir(wd):
     os.mkdir(wd)
 
 # runs the experiment 5 times
-identifiers = ['eICU_cdgan_synthetic_dataset_r' + str(i) for i in range(2,5)]
+identifiers = ['wisdm_synthetic_dataset_r' + str(i) for i in range(2,3)]
 
 for identifier in identifiers:
 
@@ -34,10 +34,14 @@ for identifier in identifiers:
 
     print ("loading data...")
 
-    samples, labels = data_utils.eICU_task()
-    train_seqs = samples['train'].reshape(-1,16,4)
-    vali_seqs = samples['vali'].reshape(-1,16,4)
-    test_seqs = samples['test'].reshape(-1,16,4)
+    sample_length = 200
+
+    # samples, labels = data_utils.eICU_task()
+    data_path = './experiments/data/' + 'wisdm' + '.data.npy'
+    samples, pdf, labels = data_utils.get_data('load', data_path)
+    train_seqs = samples['train'].reshape(-1,sample_length,3)
+    vali_seqs = samples['vali'].reshape(-1,sample_length,3)
+    test_seqs = samples['test'].reshape(-1,sample_length,3)
     train_targets = labels['train']
     vali_targets = labels['vali']
     test_targets = labels['test']
@@ -47,7 +51,7 @@ for identifier in identifiers:
 
     #training config
     lr = 0.1
-    batch_size = 28
+    batch_size = 16
     num_epochs = 1005
     D_rounds = 1    # number of rounds of discriminator training
     G_rounds = 3    # number of rounds of generator training
@@ -241,6 +245,7 @@ for identifier in identifiers:
             for batch_idx in range(int(len(vali_seqs) / batch_size)):
                 X_mb, Y_mb = get_batch(vali_seqs, vali_targets, batch_size, batch_idx)
                 z_ = sample_Z(batch_size, seq_length, latent_dim, use_time=use_time)
+                # Y_mb = np.reshape(Y_mb, (Y_mb.shape[0], 1))
                 gen_samples_mb = sess.run(G_sample, feed_dict={Z: z_, CG:Y_mb})
                 gen_samples.append(gen_samples_mb)
                 labels_gen_samples.append(Y_mb)

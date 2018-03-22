@@ -1,11 +1,11 @@
 {
-"settings_file": "cristobal_eicu",
-"data": "eICU_task",
-"num_samples": 17693,
-"seq_length": 16,
-"num_signals": 4,
-"normalise": false,
-"cond_dim": 7,
+"settings_file": "wisdm",
+"data": "wisdm",
+"num_samples": 224,
+"seq_length": 50,
+"num_signals": 3,
+"normalise": true,
+"cond_dim": 6,
 "max_val": 1,
 "one_hot": true,
 "predict_labels": false,
@@ -16,7 +16,7 @@
 "amplitude_high": 0.9,
 "multivariate_mnist": true,
 "full_mnist": false,
-"data_load_from": "",
+"data_load_from": "wisdm",
 "resample_rate_in_min": 15,
 "hidden_units_g": 100,
 "hidden_units_d": 100,
@@ -39,5 +39,5 @@
 "l2norm_bound": 4,
 "batches_per_lot": 1,
 "dp_sigma": 0.6,
-"num_generated_features": 4
+"num_generated_features": 3
 }
