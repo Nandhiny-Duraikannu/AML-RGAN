@@ -34,7 +34,7 @@ for identifier in identifiers:
 
     print ("loading data...")
 
-    sample_length = 200
+    sample_length = 60
 
     # samples, labels = data_utils.eICU_task()
     data_path = './experiments/data/' + 'wisdm' + '.data.npy'
